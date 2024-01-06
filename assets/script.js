@@ -199,6 +199,7 @@ function createVersionSelector() {
         version_list.forEach((versionNumber) => {
             var versionButton = document.createElement("div");
             versionButton.className = "filter-button";
+            versionButton.setAttribute("data-state", "inactive");
             versionButton.innerText = versionNumber;
             versionButton.addEventListener("click", (e) =>
                 handleButtonClick(e, "versionFilters", versionNumber, versionContainer));
