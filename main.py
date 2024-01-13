@@ -82,17 +82,21 @@ def one_api_request(limit: int, offset : int, queuetype : str):
     
     return json.loads(r.text)
 
-def check_if_data_useful(input_data) -> bool:
+def check_if_data_useful(player_data) -> bool:
     """
     Checks if this particular build is a pro leak
     Looking for groups of waves that leak less than 4, 4, 7 on waves 1, 2, 3
     """
-    if len(input_data) < 3:
+    if "cross" in player_data and player_data["cross"] == True:
         return False
 
-    if (0 < len(input_data[0]) < 4 and
-        0 < len(input_data[1]) < 4 and
-        0 < len(input_data[2]) < 7):
+    wave_leak_data = player_data["leaksPerWave"]
+    if len(wave_leak_data) < 3:
+        return False
+
+    if (0 < len(wave_leak_data[0]) < 4 and
+        0 < len(wave_leak_data[1]) < 4 and
+        0 < len(wave_leak_data[2]) < 7):
             return True
 
     return False
@@ -110,12 +114,16 @@ def filter_data(raw_data : str) -> list:
 
     for game in raw_data:
         for player in game["playersData"]:
-            if check_if_data_useful(player["leaksPerWave"]):
+            if "votedmode" in game and game["votedmode"] != "GigaMercs" and check_if_data_useful(player):
+
+                date = datetime.strptime(date, date_format)
+                formatted_date = date.strftime('%Y-%m-%d %H:%M:%S')
+
                 # creating a new dictionary with only the data we need
                 player_dict = {}
                 player_dict["game_id"] = game["_id"]
                 player_dict["version"] = game["version"]
-                player_dict["date"] = datetime.strptime(game["date"], date_format).date()
+                player_dict["date"] = formatted_date
                 player_dict["queueType"] = game["queueType"]
                 player_dict["playerName"] = player["playerName"]
                 player_dict["legion"] = player["legion"]
