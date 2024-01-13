@@ -69,7 +69,7 @@ def one_api_request(limit: int, offset : int, queuetype : str):
     
     dateBefore = datetime.strftime(datetime.utcnow() - timedelta(0), '%Y-%m-%d') # YYYY-MM-DD
     dateAfter = datetime.strftime(datetime.utcnow() - timedelta(1), '%Y-%m-%d') # One Day Ago
-    URL = f"""{api_url}/games?limit={limit}&offset={offset}&sortBy=date&sortDirection=1&dateBefore={dateBefore}&dateAfter={dateAfter}&includeDetails=true&countResults=false&queueType={queuetype}"""
+    URL = f"""{api_url}/games?limit={limit}&offset={offset}&sortBy=date&sortDirection=1&dateBefore={dateBefore}%2000%3A00%3A00&dateAfter={dateAfter}%2000%3A00%3A00&includeDetails=true&countResults=false&queueType={queuetype}"""
 
     try:
         r = requests.get(URL, headers=headers)
@@ -115,7 +115,8 @@ def filter_data(raw_data : str) -> list:
     for game in raw_data:
         for player in game["playersData"]:
             if "votedmode" in game and game["votedmode"] != "GigaMercs" and check_if_data_useful(player):
-
+                
+                date = game["date"]
                 date = datetime.strptime(date, date_format)
                 formatted_date = date.strftime('%Y-%m-%d %H:%M:%S')
 
@@ -142,7 +143,7 @@ def write_sql_insert_statement(input_data):
     """
 
     add_match_data = ("INSERT INTO match_data "
-                      "(GAME_ID, GAME_VERSION, GAME_DATE, queueType, PLAYER_NAME, PLAYER_LEGION, PLAYER_BUILDPERWAVE, PLAYER_MERCSRECEIVED, PLAYER_LEAKSPERWAVE )"
+                      "(GAME_ID, GAME_VERSION, datetime, queueType, PLAYER_NAME, PLAYER_LEGION, PLAYER_BUILDPERWAVE, PLAYER_MERCSRECEIVED, PLAYER_LEAKSPERWAVE )"
                       "VALUES (%(game_id)s, %(version)s, %(date)s, %(queueType)s, %(playerName)s, %(legion)s, %(buildPerWave)s, %(mercenariesReceivedPerWave)s, %(leaksPerWave)s)")
     
     cnx = connect_to_mysql(mysql_config)
@@ -157,7 +158,7 @@ def write_sql_insert_statement(input_data):
 
 def api_call_loop(gamemode):
 
-    start, end = 0, 1000
+    start, end = 0, 1100
     limit = 20
     for i in range(start, end):
         offset = i * int(limit)

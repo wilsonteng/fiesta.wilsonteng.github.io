@@ -256,7 +256,7 @@ const createSlider = (container) => {
     slider.setAttribute("min", 1);
     slider.setAttribute("max", 3);
     slider.setAttribute("id", "wavesToFilter");
-    slider.setAttribute("value", 3);
+    slider.setAttribute("value", 1);
     sliderValueText.innerHTML = `Waves to Check Filters For: ${slider.value}`;
 
     sliderContainer.append(slider);
