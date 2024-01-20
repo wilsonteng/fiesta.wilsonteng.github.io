@@ -1,8 +1,8 @@
-#!/bin/bash
 
 set -eo pipefail
+echo “NEW Hello World $(date) /home/$USER/git/proleak.github.io/” >> $HOME/scripttest.txt
 
-cd /home/${USER}/git/proleak.github.io/
+cd ~/git/proleak.github.io/
 
 python3 main.py
 python3 read_sql_and_output_json.py
