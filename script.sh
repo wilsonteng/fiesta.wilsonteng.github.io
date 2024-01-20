@@ -1,3 +1,4 @@
+#!/bin/bash
 
 set -eo pipefail
 echo “NEW Hello World $(date) /home/$USER/git/proleak.github.io/” >> $HOME/scripttest.txt
