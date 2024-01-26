@@ -1,12 +1,11 @@
 #!/bin/bash
 
 set -eo pipefail
-echo “NEW Hello World $(date) /home/$USER/git/proleak.github.io/” >> $HOME/scripttest.txt
 
-cd ~/git/proleak.github.io/
+cd /home/wilsonteng/git/proleak.github.io/
 
-python3 main.py
-python3 read_sql_and_output_json.py
+/usr/bin/python3 main.py
+/usr/bin/python3 read_sql_and_output_json.py
 
 git add assets/data.json
 git add assets/date_created.json
