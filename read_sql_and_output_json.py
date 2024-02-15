@@ -31,6 +31,7 @@ unit_leak_dictionary = {
     "Wale" : 7,
     "Hopper" : 5,
     "Snail" : 6,
+    "Robo" : 10,
     "Dragon Turtle" : 12,
     "Lizard" : 12,
     "Brute" : 15,
