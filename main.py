@@ -77,7 +77,7 @@ def one_api_request(limit: int, offset : int, queuetype : str):
         print(e)
         return False
 
-    print(f"Retrieving data for {offset} to {offset + int(limit)} for queueType {queuetype}. Status Code: {r.status_code}")
+    #print(f"Retrieving data for {offset} to {offset + int(limit)} for queueType {queuetype}. Status Code: {r.status_code}")
     
     return json.loads(r.text)
 
